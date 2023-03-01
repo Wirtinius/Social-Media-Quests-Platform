@@ -1,0 +1,22 @@
+{% extends 'SocialMedia/base.html' %}
+{% block title %}Change Post{% endblock %}
+{% block content %}
+<form class="" method="POST" action="">
+    {% csrf_token %}
+    <label>Post Name</label>
+    <input type="text" name="post_name" value="{{post.post_name}}">
+    <label>Post Description</label>
+    <input type="text" name="post_description" value="{{post.post_description}}">
+    <br>
+    <input type="submit" value="submit">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% endif %} 
+</form>
+{% endblock %}

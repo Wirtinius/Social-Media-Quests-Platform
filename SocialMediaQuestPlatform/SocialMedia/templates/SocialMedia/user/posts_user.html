@@ -1,0 +1,40 @@
+{% extends 'SocialMedia/base.html' %}
+{% block title %}Your Posts{% endblock %}
+{% block content %}
+<style>
+    .profile {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+    .user-profile {
+        padding: 0 200px 0 50px;
+    }
+</style>
+<div class="profile">
+    <div class="user-profile">
+        <h1>@{{user_post.username}}</h1>
+        <h2>{{user_post.first_name}} {{user.second_name}}</h2>
+        <h3>{{user_post.email}}</h3>
+        {% if user_post.bio_info %}<h4>Personal Info: <br>{{user_post.bio_info}}</h4>{% endif %}
+        {% if request.user.id == user_post.id %}<a href="{% url 'profile-form' user.id %}">Change Profile</a>{% endif %}
+    </div>
+    <div class="posts">
+        {% for post in posts %}
+            <h2>{{post.post_name}}</h2>
+            <h3>{{post.post_description}}</h3>
+            {% if request.user.id == user_post.id %}<button type="button" class="btn btn-info" onclick="window.location.href='{% url 'post-change' post.id%}'">Edit</button><button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'post-delete' post.id%}'">Delete</button>{% endif %}
+        {% endfor %}
+    </div>
+    <div>
+        <h3>Followers: </h3>
+        <h3>Following: </h3>
+        {% if request.user.id != user_post.id %}
+            {% if not is_followed %}
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'follow' user_post.id %}'" >Follow</button>
+            {% else %}
+                <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'unfollow' user_post.id %}'" >Unfollow</button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
