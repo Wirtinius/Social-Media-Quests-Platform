@@ -1,0 +1,7 @@
+{% extends 'SocialMedia/base.html' %}
+{% block title %}All Users{% endblock %}
+{% block content %}
+    {% for user in users %}
+        <h2><a href="{% url 'user-post' user.id %}">@{{user}}</a></h2>
+    {% endfor %}
+{% endblock %}

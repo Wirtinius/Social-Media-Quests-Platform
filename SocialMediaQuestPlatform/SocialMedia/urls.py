@@ -1,5 +1,5 @@
 from django.urls import path 
-from .views import home, registerPage, loginPage, logoutPage, userProfileForm, postForm, UserPost, postChange, postDelete, follow, unfollow
+from .views import *
 
 urlpatterns = [
     path("", home, name="home"),
@@ -15,6 +15,7 @@ urlpatterns = [
     path("user-post/<str:pk>", UserPost, name="user-post"),
     path("post-change/<str:pk>/", postChange, name="post-change"),
     path("post-delete/<str:pk>/", postDelete, name="post-delete"),
+    path("all-users/", AllUsers, name="all-users"),
 
     # Follow
     path("follow/<str:pk>", follow, name="follow"),

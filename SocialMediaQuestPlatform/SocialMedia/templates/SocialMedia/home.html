@@ -1,10 +1,20 @@
 {% extends 'SocialMedia/base.html' %}
 {% block title %}Home Page{% endblock %}
 {% block content %}
-    {% for post in posts %}
-        <h2>{{post.post_name}}</h2>
-        <h3>{{post.post_description}}</h3>
-        <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
+{% if user.is_authenticated %}
+    {% for following in followings %}
+        {% for post in following.post_set.all %}
+            <h2>{{post.post_name}}</h2>
+            <h3>{{post.post_description}}</h3>
+            <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
+        {% endfor %}
     {% endfor %}
+{% else %}
+    {% for post in posts %}
+            <h2>{{post.post_name}}</h2>
+            <h3>{{post.post_description}}</h3>
+            <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
+        {% endfor %}
+{% endif %}
 
 {% endblock %}

@@ -8,10 +8,17 @@ from django.contrib.auth.decorators import login_required
 
 def home(request):
     user = request.user
-    context = {}
+    posts = Post.objects.all()
+    context = {
+        'posts': posts,
+    }
     if user.is_authenticated:
         posts = Post.objects.all()
-        context = {'posts': posts}
+        followings = user.following.all()
+        context = {
+            'posts': posts,
+            'followings': followings, 
+                   }
     return render(request, "SocialMedia/home.html", context=context)
 
 
@@ -23,8 +30,9 @@ def registerPage(request):
         confirm_password = request.POST.get('confirm_password')
         email = request.POST.get('email')
         if not User.objects.filter(username=username) or not User.objects.filter(email=email):
-            if check_password(password, confirm_password):
-                User.objects.create(username=username, password=password, email=email)
+            if check_password(confirm_password, password):
+                user = User.objects.create(username=username, password=password, email=email)
+                login(request, user)
             else:
                 messages.error(request, 'The password does not match')
                 return redirect('register')
@@ -119,6 +127,15 @@ def postDelete(request, pk):
     post = Post.objects.filter(id=pk)
     post.delete()
     return redirect('user-post')
+
+
+@login_required(login_url='login')
+def AllUsers(request):
+    users = User.objects.all()
+    context = {
+        'users': users
+    }
+    return render(request, "SocialMedia/user/all_users.html", context=context)
 
 
 # Followers
