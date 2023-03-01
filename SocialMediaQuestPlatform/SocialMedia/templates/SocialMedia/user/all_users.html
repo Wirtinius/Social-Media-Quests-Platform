@@ -1,7 +1,13 @@
 {% extends 'SocialMedia/base.html' %}
 {% block title %}All Users{% endblock %}
 {% block content %}
-    {% for user in users %}
+<div class="input-group" style="width: 300px; padding: 20px 0;">
+    <form action="" method="get">
+    <input name="q" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+    <input type="submit" value="search" class="btn btn-outline-primary">
+</div>
+    {% for user in user_searched %}
         <h2><a href="{% url 'user-post' user.id %}">@{{user}}</a></h2>
     {% endfor %}
+</div>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 def home(request):
@@ -131,8 +132,15 @@ def postDelete(request, pk):
 
 @login_required(login_url='login')
 def AllUsers(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    user_searched = User.objects.filter(
+        Q(username__icontains=q) 
+        )
+
+
     users = User.objects.all()
     context = {
+        'user_searched': user_searched,
         'users': users
     }
     return render(request, "SocialMedia/user/all_users.html", context=context)
