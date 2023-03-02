@@ -17,15 +17,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_name = models.CharField(max_length=30)
     post_description = models.TextField()
-    like = models.BooleanField(default=False)
-    dislike = models.BooleanField(default=False)
-    
-    def like_count(self):
-        return self.like.count()
-    
-    def dislike_count(self):
-        return self.dislike.count()
-    
+
     def __str__(self):
         return self.post_name
 
@@ -38,3 +30,14 @@ class Chat(models.Model):
     def __str__(self):
         return self.message
     
+
+class Reaction(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
+    like = models.BooleanField(default=False)
+    dislike = models.BooleanField(default=False)
+    
+    def like_count(self):
+        return self.like.count()
+    
+    def dislike_count(self):
+        return self.dislike.count()
