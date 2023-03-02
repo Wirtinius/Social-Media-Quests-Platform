@@ -21,6 +21,11 @@ urlpatterns = [
     path("follow/<str:pk>", follow, name="follow"),
     path("unfollow/<str:pk>", unfollow, name="unfollow"),
 
-    #Chat
-    path("chat/<str:pk>", message, name="chat")
+    # Chat
+    path("chat/<str:pk>", message, name="chat"),
+
+
+    # Reaction
+    path("like/<str:pk>", like, name="like"),
+    path("dislike/<str:pk>", dislike, name="dislike"),
 ]

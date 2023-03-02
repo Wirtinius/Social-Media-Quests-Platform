@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User, Post, Chat
+from .models import User, Post, Chat, Reaction
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
@@ -180,3 +180,27 @@ def message(request, pk):
         'receiver': receiver,
              }    
     return render(request,'SocialMedia/user/chat.html', context=context)
+
+
+@login_required(login_url='login')
+def like(request, pk):
+    post = Post.objects.get(id=pk)
+    if post.reaction_set:
+        post = Post.objects.get(id=pk)
+        post.reaction_set.update(post=post, like=True, dislike=False)
+    else: 
+        Reaction.objects.create(post=post, like=True, dislike=False)
+    return redirect('home')
+
+
+@login_required(login_url='login')
+def dislike(request, pk):
+    post = Post.objects.get(id=pk)
+    if post.reaction_set:
+        post = Post.objects.get(id=pk)
+        post.reaction_set.update(post=post, like=False, dislike=True)
+    else: 
+        Reaction.objects.create(post=post, like=False, dislike=True)
+    return redirect('home')
+
+

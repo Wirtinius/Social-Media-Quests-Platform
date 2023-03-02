@@ -12,6 +12,9 @@
             <h2>{{post.post_name}}</h2>
             <h3>{{post.post_description}}</h3>
             <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
+            <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'like' post.id %}'" >Like</button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'dislike' post.id %}'" >Dislike</button>
+
         {% endfor %}
     {% endfor %}
 {% else %}
