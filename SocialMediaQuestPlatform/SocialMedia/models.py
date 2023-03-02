@@ -29,3 +29,14 @@ class Chat(models.Model):
 
     def __str__(self):
         return self.message
+    
+
+class Reaction(models.Model):
+    like = models.BooleanField(default=False)
+    dislike = models.BooleanField(default=False)
+
+    def like_count(self):
+        return self.like.count()
+    
+    def dislike_count(self):
+        return self.dislike.count()
