@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User, Post
+from .models import User, Post, Chat
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
@@ -165,3 +165,18 @@ def unfollow(request, pk):
     follower.following.remove(following)
     following.follower.remove(follower)
     return redirect('home')
+
+
+# Chat
+@login_required(login_url='login')
+def message(request, pk):
+    sender = request.user
+    receiver = User.objects.get(id=pk)
+    message = request.POST.get('message')
+    if request.method == 'POST':
+        Chat.objects.create(sender=sender, message=message)
+    context={
+        'sender': sender,
+        'receiver': receiver,
+             }    
+    return render(request,'SocialMedia/user/chat.html', context=context)

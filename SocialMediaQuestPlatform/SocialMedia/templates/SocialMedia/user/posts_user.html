@@ -35,6 +35,9 @@
                 <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'unfollow' user_post.id %}'" >Unfollow</button>
             {% endif %}
         {% endif %}
+        {% if request.user.id != user_post.id %}
+            <h3><a href="{% url 'chat' user_post.id %}">Message</a></h3>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

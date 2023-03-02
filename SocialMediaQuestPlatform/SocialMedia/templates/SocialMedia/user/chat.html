@@ -1,0 +1,29 @@
+{% extends 'SocialMedia/base.html' %}
+{% block title %}Chat{% endblock %}
+{% block content %}
+<style>
+    .message {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+<div>
+    <div class="message">
+        <div class="row">
+            {% for receiver_mes in receiver.message_sender.all %}
+                <h1>{{receiver_mes.message}}</h1>
+            {% endfor %}
+        </div>
+        <div class="row">
+        {% for sender_mes in sender.message_sender.all %}
+                <h1>{{sender_mes.message}}</h1>
+        {% endfor %}
+        </div>
+    </div>
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Write some text">
+        <input type="submit" value="Send">
+    </form>
+</div>
+{% endblock %}

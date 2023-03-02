@@ -21,3 +21,11 @@ class Post(models.Model):
     def __str__(self):
         return self.post_name
 
+
+class Chat(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_sender')
+    message = models.TextField()
+
+
+    def __str__(self):
+        return self.message

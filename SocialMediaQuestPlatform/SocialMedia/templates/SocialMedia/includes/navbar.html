@@ -16,6 +16,9 @@
             </li>
 
         </ul>
+        <span class="navbar-text">
+            <a href="#" class="nav-link">Chat</a>
+        </span>
         {% if user.is_authenticated %}
             <span class="navbar-text">
                 <a href="{% url 'post-form' %}" class="nav-link">Create a post</a>

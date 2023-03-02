@@ -19,5 +19,8 @@ urlpatterns = [
 
     # Follow
     path("follow/<str:pk>", follow, name="follow"),
-    path("unfollow/<str:pk>", unfollow, name="unfollow")
+    path("unfollow/<str:pk>", unfollow, name="unfollow"),
+
+    #Chat
+    path("chat/<str:pk>", message, name="chat")
 ]
