@@ -12,9 +12,12 @@
             <h2>{{post.post_name}}</h2>
             <h3>{{post.post_description}}</h3>
             <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
-            <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'like' post.id %}'" >Like</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'dislike' post.id %}'" >Dislike</button>
-
+            {% if not user.user_reaction.exists %}
+                <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'like' post.id %}'" >Like</button>
+            {% else %}
+                <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'unlike' post.id %}'" >Unlike</button>
+            {% endif %}
+            <h4>Likes: {{post.post_reaction.count}}</h4>
         {% endfor %}
     {% endfor %}
 {% else %}

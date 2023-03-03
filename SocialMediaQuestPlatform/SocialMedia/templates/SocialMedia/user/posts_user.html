@@ -23,6 +23,13 @@
             <h2>{{post.post_name}}</h2>
             <h3>{{post.post_description}}</h3>
             {% if request.user.id == user_post.id %}<button type="button" class="btn btn-info" onclick="window.location.href='{% url 'post-change' post.id%}'">Edit</button><button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'post-delete' post.id%}'">Delete</button>{% endif %}
+            {% if request.user.id != user_post.id %}
+                {% if not user.user_reaction.exists %}
+                    <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'like' post.id %}'" >Like</button>
+                {% else %}
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'unlike' post.id %}'" >Unlike</button>
+                {% endif %}
+            {% endif %}
         {% endfor %}
     </div>
     <div>

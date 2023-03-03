@@ -31,13 +31,12 @@ class Chat(models.Model):
         return self.message
     
 
-class Reaction(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='user_reaction')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_reaction')
     like = models.BooleanField(default=False)
-    dislike = models.BooleanField(default=False)
-    
+
     def like_count(self):
-        return self.like.count()
-    
-    def dislike_count(self):
-        return self.dislike.count()
+        return self.like.count()    
+
+

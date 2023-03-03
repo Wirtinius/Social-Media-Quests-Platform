@@ -27,5 +27,6 @@ urlpatterns = [
 
     # Reaction
     path("like/<str:pk>", like, name="like"),
-    path("dislike/<str:pk>", dislike, name="dislike"),
+    path("unlike/<str:pk>", unlike, name="unlike"),
+
 ]
