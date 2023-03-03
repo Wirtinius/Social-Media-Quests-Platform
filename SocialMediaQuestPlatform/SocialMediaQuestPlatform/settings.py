@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "SocialMedia"
+    "rest_framework",
+    "SocialMedia",
 ]
 
 MIDDLEWARE = [

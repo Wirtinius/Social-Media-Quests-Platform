@@ -1,5 +1,6 @@
 from django.urls import path 
 from .views import *
+from .api import PostListView
 
 urlpatterns = [
     path("", home, name="home"),
@@ -29,4 +30,6 @@ urlpatterns = [
     path("like/<str:pk>", like, name="like"),
     path("unlike/<str:pk>", unlike, name="unlike"),
 
+    # API
+    path("api/", PostListView.as_view(), name='api'),
 ]
