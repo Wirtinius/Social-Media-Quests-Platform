@@ -1,0 +1,31 @@
+{% extends 'SocialMedia/base.html' %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+{% for post in request.user.post_set.all %}
+    <h2>{{post.post_name}}</h2>
+    <h3>{{post.post_description}}</h3>
+    <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
+{% endfor %}
+{% if user.is_authenticated %}
+    {% for following in followings %}
+        {% for post in following.post_set.all %}
+            <h2>{{post.post_name}}</h2>
+            <h3>{{post.post_description}}</h3>
+            <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
+            {% if not user.user_reaction.exists %}
+                <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'like' post.id %}'" >Like</button>
+            {% else %}
+                <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'unlike' post.id %}'" >Unlike</button>
+            {% endif %}
+            <h4>Likes: {{post.post_reaction.count}}</h4>
+        {% endfor %}
+    {% endfor %}
+{% else %}
+    {% for post in posts %}
+            <h2>{{post.post_name}}</h2>
+            <h3>{{post.post_description}}</h3>
+            <a href="{% url 'user-post' post.user.id %}">@{{post.user}}</a>
+        {% endfor %}
+{% endif %}
+
+{% endblock %}
