@@ -40,3 +40,10 @@ class Like(models.Model):
         return self.like.count()    
 
 
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment')
+    comment = models.TextField()
+
+    def __str__(self):
+        return self.comment 

@@ -84,7 +84,7 @@
                         </div>
                       </div>
                       <div class="roomListRoom__content">
-                        <a href="room.html">{{post.post_name}}</a>
+                        <a href="{% url 'post-room' post.id  %}">{{post.post_name}}</a>
                         <p>
                           {{post.post_description}}
                         </p>
@@ -121,7 +121,7 @@
               </div>
             </div>
             <div class="roomListRoom__content">
-              <a href="room.html">{{post.post_name}}</a>
+              <a href="{% url 'post-room' post.id  %}">{{post.post_name}}</a>
               <p>
                 {{post.post_description}}
               </p>

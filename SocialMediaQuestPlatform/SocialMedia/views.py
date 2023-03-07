@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User, Post, Chat, Like
+from .models import User, Post, Chat, Like, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
@@ -30,17 +30,21 @@ def registerPage(request):
         password = make_password(request.POST.get('password'))
         confirm_password = request.POST.get('confirm_password')
         email = request.POST.get('email')
-        if not User.objects.filter(username=username) or not User.objects.filter(email=email):
-            if check_password(confirm_password, password):
-                user = User.objects.create(username=username, password=password, email=email)
-                login(request, user)
-            else:
-                messages.error(request, 'The password does not match')
-                return redirect('register')
-        else: 
-            messages.error(request, 'The username or email have already been taken')
+        if (username or request.POST.get('password') or confirm_password or email) is None:
+            messages.error(request, 'Fill every field to register!')
             return redirect('register')
-        return redirect('home')
+        else:
+            if not User.objects.filter(username=username) or not User.objects.filter(email=email):
+                if check_password(confirm_password, password):
+                    user = User.objects.create(username=username, password=password, email=email)
+                    login(request, user)
+                else:
+                    messages.error(request, 'The password does not match')
+                    return redirect('register')
+            else: 
+                messages.error(request, 'The username or email have already been taken')
+                return redirect('register')
+            return redirect('home')
     return render(request, "SocialMedia/authentication/register.html")
 
 
@@ -65,17 +69,17 @@ def logoutPage(request):
 
 # User's interaction
 @login_required(login_url='login')
-def userProfileForm(request, pk):
+def userEdit(request, pk):
     user = User.objects.filter(id=pk)
     if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        second_name = request.POST.get('second_name')
+        # first_name = request.POST.get('first_name')
+        # second_name = request.POST.get('second_name')
         username = request.POST.get('username')
         email = request.POST.get('email')
-        personal_info = request.POST.get('personal_info')
-        user.update(first_name=first_name, second_name=second_name, username=username, email=email, bio_info=personal_info)
+        user_bio = request.POST.get('user_bio')
+        user.update(username=username, email=email, bio_info=user_bio)
         return redirect('user-post', pk=request.user.id)
-    return render(request, "SocialMedia/user/user_profile_form.html")
+    return render(request, "SocialMedia/user/edit-user.html")
 
 
 @login_required(login_url='login')
@@ -120,14 +124,29 @@ def UserPost(request, pk):
         'user_post': user,
         'is_followed': is_followed,
         }
-    return render(request, "SocialMedia/user/posts_user.html", context=context)
+    return render(request, "SocialMedia/user/profile.html", context=context)
+
+
+@login_required(login_url='login')
+def postRoom(request, pk):
+    post = Post.objects.get(id=pk)
+    comments = post.post_comment.all()
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        Comment.objects.create(user=request.user, post=post, comment=comment)
+        return redirect('post-room', pk=post.id)
+    context = {
+        'post': post,
+        'comments': comments
+               }
+    return render(request, "SocialMedia/user/post_room.html", context=context)
 
 
 @login_required(login_url='login')
 def postDelete(request, pk):
     post = Post.objects.filter(id=pk)
     post.delete()
-    return redirect('user-post')
+    return redirect('user-post', pk=request.user.id)
 
 
 @login_required(login_url='login')

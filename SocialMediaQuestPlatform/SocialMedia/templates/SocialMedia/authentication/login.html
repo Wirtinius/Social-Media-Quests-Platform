@@ -47,10 +47,18 @@
                 Login
               </button>
             </form>
-
+            {% if messages %}
+              {% for message in messages %}
+                  <div class="alert alert-danger" role="alert">
+                      <ul>
+                          <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red;">{{ message }}</li>
+                      </ul>
+                  </div>
+              {% endfor %}
+            {% endif %} 
             <div class="auth__action">
               <p>Haven't signed up yet?</p>
-              <a href="signup.html" class="btn btn--link">Sign Up</a>
+              <a href="{% url 'register' %}" class="btn btn--link">Sign Up</a>
             </div>
           </div>
         </div>

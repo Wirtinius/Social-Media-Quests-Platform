@@ -12,9 +12,10 @@ urlpatterns = [
 
     # User
     path("post-form/", postForm, name="post-form"),
-    path("profile-form/<str:pk>/", userProfileForm, name="profile-form"),
+    path("edit-user/<str:pk>/", userEdit, name="edit-user"),
     path("user-post/<str:pk>", UserPost, name="user-post"),
     path("post-change/<str:pk>/", postChange, name="post-change"),
+    path("post-room/<str:pk>/", postRoom, name="post-room"),
     path("post-delete/<str:pk>/", postDelete, name="post-delete"),
     path("all-users/", AllUsers, name="all-users"),
 
