@@ -10,12 +10,13 @@ urlpatterns = [
     path("login/", loginPage, name="login"),
     path("logout/", logoutPage, name="logout"),
 
-    # User
+    # User(posts)
     path("post-form/", postForm, name="post-form"),
     path("edit-user/<str:pk>/", userEdit, name="edit-user"),
     path("user-post/<str:pk>", UserPost, name="user-post"),
     path("post-change/<str:pk>/", postChange, name="post-change"),
     path("post-room/<str:pk>/", postRoom, name="post-room"),
+    path("deleteComment/<str:pk>", deleteComment, name="delete-comment"),
     path("post-delete/<str:pk>/", postDelete, name="post-delete"),
     path("all-users/", AllUsers, name="all-users"),
 

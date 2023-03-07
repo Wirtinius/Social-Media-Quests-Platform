@@ -143,6 +143,14 @@ def postRoom(request, pk):
 
 
 @login_required(login_url='login')
+def deleteComment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    post = comment.post
+    comment.delete()
+    return redirect('post-room', pk=post.id)
+
+
+@login_required(login_url='login')
 def postDelete(request, pk):
     post = Post.objects.filter(id=pk)
     post.delete()
