@@ -45,9 +45,20 @@
           <div class="profile__info">
             <h3>Dennis Kardasian Ivy</h3>
             <p>@{{user_post.username}}</p>
+            {% if request.user.id != user_post.id %}
+              {% if not is_followed %}
+                  <a href="{% url 'follow' user_post.id %}" class="btn btn--main btn--pill">Follow</a>
+              {% else %}
+                  <a href="{% url 'unfollow' user_post.id %}" class="btn btn--main btn--pill">Unfollow</a>
+              {% endif %}
+            {% endif %}
             {% if user_post.id == request.user.id %}
             <a href="{% url 'edit-user' user.id %}" class="btn btn--main btn--pill">Edit Profile</a>
             {% endif %}
+            <div>
+              <a href="{% url 'chat' user_post.id %}" class="btn btn--main btn--pill" style="margin-top: 2%">Message</a>
+              {% comment %} create another class in css file {% endcomment %}
+            </div>
           </div>
           <div class="profile__about">
             <h3>About</h3>

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "SocialMedia",
+    "Games",
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,11 @@ AUTH_USER_MODEL = "SocialMedia.User"
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STARICFILES_DIRS = [ BASE_DIR / 'static' ]
+STARICFILES_ROOT = BASE_DIR / 'staticfiles'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
